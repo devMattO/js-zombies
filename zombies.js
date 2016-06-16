@@ -148,13 +148,11 @@ function Player( name, health, strength, speed ) {
   };
 
   Player.prototype.equip = function ( itemToEquip ) {
-    var pack = this.getPack;
-    if( itemToEquip instanceof Weapon ) {
-      if( !(itemToEquip instanceof pack) ) {
-
+    var pack = this.getPack();
+    if( itemToEquip instanceof Weapon ) { //passes
+      if( pack.hasOwnProperty( itemToEquip ) ) {
           this.equipped = itemToEquip;
-
-      }else{
+      } else {
         return false;
       }
     }
@@ -395,12 +393,18 @@ StrongZombie.prototype = Object.create(Zombie.prototype, {
  * @param {number} speed            The zombie's speed.
  */
 
+function RangedZombie( health, strength, speed ) {
+  Zombie.call(this, health, strength, speed);
+}
 
 /**
  * StrongZombie Extends Zombie Class
  * -----------------------------
  */
 
+RangedZombie.prototype = Object.create(Zombie.prototype, {
+  constructor: RangedZombie
+});
 
 
 /**
@@ -418,13 +422,18 @@ StrongZombie.prototype = Object.create(Zombie.prototype, {
  * @param {number} speed            The zombie's speed.
  */
 
+function ExplodingZombie( health, strength, speed ) {
+  Zombie.call(this, health, strength, speed);
+}
 
 /**
  * ExplodingZombie Extends Zombie Class
  * -----------------------------
  */
 
-
+ExplodingZombie.prototype = Object.create(Zombie.prototype, {
+  constructor: ExplodingZombie
+});
 
 
 /**
