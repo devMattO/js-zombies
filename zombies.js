@@ -310,6 +310,8 @@ function Player( name, health, strength, speed ) {
  * @property {boolean} isAlive      Default value should be `true`.
  */
 
+
+
 function Zombie(health, strength, speed) {
   this.health = health;
   this.strength = strength;
@@ -337,12 +339,17 @@ function Zombie(health, strength, speed) {
  * @param {number} speed            The zombie's speed.
  */
 
+function FastZombie( health, strength, speed ) {
+  Zombie.call(this, health, strength, speed);
+}
 
 /**
  * FastZombie Extends Zombie Class
  * -----------------------------
  */
-
+FastZombie.prototype = Object.create(Zombie.prototype, {
+  constructor: FastZombie
+});
 
 
 /**
@@ -360,13 +367,18 @@ function Zombie(health, strength, speed) {
  * @param {number} speed            The zombie's speed.
  */
 
+function StrongZombie( health, strength, speed ) {
+  Zombie.call(this, health, strength, speed);
+}
 
 /**
  * StrongZombie Extends Zombie Class
  * -----------------------------
  */
 
-
+StrongZombie.prototype = Object.create(Zombie.prototype, {
+  constructor: StrongZombie
+});
 
 /**
  * Class => RangedZombie(health, strength, speed)
