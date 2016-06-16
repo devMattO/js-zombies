@@ -101,6 +101,7 @@ function Player( name, health, strength, speed ) {
   this.speed = speed;
   var pack = [];
   var equipped;
+  var maxHealth = this.health;
   Player.prototype.isAlive = true;
   Player.prototype.equipped = false;
   Player.prototype.getPack = function() {
@@ -108,7 +109,6 @@ function Player( name, health, strength, speed ) {
   };
 
   Player.prototype.getMaxHealth = function() {
-    var maxHealth = this.health;
     return maxHealth;
   };
 
@@ -148,16 +148,59 @@ function Player( name, health, strength, speed ) {
   };
 
   Player.prototype.equip = function ( itemToEquip ) {
-    var pack = this.getPack();
     if( itemToEquip instanceof Weapon ) { //passes
-      if( pack.hasOwnProperty( itemToEquip ) ) {
-          this.equipped = itemToEquip;
-      } else {
-        return false;
+      console.log( pack, '<==========' );
+      for( var i = 0; i < pack.length; i++ ) {
+        if( itemToEquip === pack[i] ) {
+          if(this.equipped !== false) {
+            pack.push(this.equipped);
+            pack.splice(i,1);
+            this.equipped = itemToEquip;
+          } else {
+            this.equipped = itemToEquip;
+            pack.splice( i, 1 );
+          }
+        } else {
+          return false;
+        }
       }
     }
   };
 
+  Player.prototype.eat = function( itemToEat ) {
+    var pack = this.getPack();
+    var packIndex = pack.indexOf( itemToEat );
+    var maxHealth = this.getMaxHealth();
+
+    if( itemToEat instanceof Food ) {
+      if( packIndex >= 0 ) {
+        pack.splice(packIndex, 1);
+        if( itemToEat.energy + this.health > maxHealth ) {
+          this.health = maxHealth;
+        } else {
+          this.health += itemToEat.energy;
+        }
+      }
+    }
+  };
+
+  Player.prototype.useItem = function( item ) {
+    if( item instanceof Weapon ) {
+      this.equip( item );
+    }else if( item instanceof Food ) {
+      this.eat( item );
+    }
+  };
+
+  Player.prototype.equippedWith = function() {
+    if( this.equipped === false ) {
+      console.log( 'There is nothing equipped rn' );
+      return false;
+    } else {
+      console.log( this.name + ' ' + this.equipped.name );
+      return this.equipped.name;
+    }
+  };
 
 } // closes Player function
 
