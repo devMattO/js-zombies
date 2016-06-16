@@ -100,6 +100,7 @@ function Player( name, health, strength, speed ) {
   this.strength = strength;
   this.speed = speed;
   var pack = [];
+  var equipped;
   Player.prototype.isAlive = true;
   Player.prototype.equipped = false;
   Player.prototype.getPack = function() {
@@ -149,12 +150,12 @@ function Player( name, health, strength, speed ) {
   Player.prototype.equip = function ( itemToEquip ) {
     var pack = this.getPack;
     if( itemToEquip instanceof Weapon ) {
-      if( itemToEquip instanceof pack ) {
-        if( itemToEquip instanceof Player ) {
+      if( !(itemToEquip instanceof pack) ) {
 
-        }
+          this.equipped = itemToEquip;
+
       }else{
-        return itemToEquip;
+        return false;
       }
     }
   };
@@ -308,6 +309,17 @@ function Player( name, health, strength, speed ) {
  * @property {number} speed
  * @property {boolean} isAlive      Default value should be `true`.
  */
+
+function Zombie(health, strength, speed) {
+  this.health = health;
+  this.strength = strength;
+  this.speed = speed;
+  this.isAlive = true;
+  Zombie.prototype.getMaxHealth = function() {
+    var maxHealth = this.health;
+    return maxHealth;
+  };
+}
 
 
 /**
