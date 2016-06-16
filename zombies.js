@@ -94,6 +94,73 @@ Food.prototype = Object.create(Item.prototype, {
  * @property {method} getMaxHealth         Returns private variable `maxHealth`.
  */
 
+function Player( name, health, strength, speed ) {
+  this.name = name;
+  this.health = health;
+  this.strength = strength;
+  this.speed = speed;
+  var pack = [];
+  Player.prototype.isAlive = true;
+  Player.prototype.equipped = false;
+  Player.prototype.getPack = function() {
+    return pack;
+  };
+
+  Player.prototype.getMaxHealth = function() {
+    var maxHealth = this.health;
+    return maxHealth;
+  };
+
+  Player.prototype.checkPack = function() {
+    var prettyPack;
+    if(this.getPack().length === 3){
+      prettyPack = this.getPack()[0] + this.getPack()[1] + this.getPack()[2];
+    } else if ( this.getPack().length === 2 ) {
+      prettyPack = this.getPack()[0] + this.getPack()[1];
+    } else if ( this.getPack().length === 1 ) {
+      prettyPack = this.getPack()[0];
+    }
+    console.log(prettyPack);
+    return prettyPack;
+  };
+
+  Player.prototype.takeItem = function( item ) {
+  if( this.getPack().length >= 3){
+    console.log('Pack is full. Item could not be stored');
+    return false;
+  }
+  if(this.checkPack.length < 3){
+    var thisPack = this.getPack();
+    thisPack.push( item );
+    console.log(this.name + '\'s ' + 'pack contains ' + this.checkPack().name);
+    return true;
+  }
+  };
+
+  Player.prototype.discardItem = function( item ) {
+    var itemIndex = this.getPack().indexOf( item );
+    if( itemIndex >= 0) {
+      this.getPack().splice( itemIndex, 1 );
+      console.log(this.name + '\'s ' + item.name + ' was discarded');
+      return true;
+    }
+  };
+
+  Player.prototype.equip = function ( itemToEquip ) {
+    var pack = this.getPack;
+    if( itemToEquip instanceof Weapon ) {
+      if( itemToEquip instanceof pack ) {
+        if( itemToEquip instanceof Player ) {
+
+        }
+      }else{
+        return itemToEquip;
+      }
+    }
+  };
+
+
+} // closes Player function
 
 /**
  * Player Class Method => checkPack()
@@ -106,6 +173,7 @@ Food.prototype = Object.create(Item.prototype, {
  *
  * @name checkPack
  */
+
 
 
 /**
@@ -125,6 +193,7 @@ Food.prototype = Object.create(Item.prototype, {
  * @param {Item/Weapon/Food} item   The item to take.
  * @return {boolean} true/false     Whether player was able to store item in pack.
  */
+
 
 
 /**
